@@ -47,6 +47,11 @@ for l in source.splitlines():
             blankFlag = False
 
 def queryUser():
+    ''' Queries the user and reports if the answer is correct
+
+    returns:
+    index of right answer; -1 otherwise
+    '''
 
     def countTotal():
         ''' Count total of possible questions
