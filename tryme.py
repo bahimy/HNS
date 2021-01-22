@@ -48,8 +48,22 @@ for l in source.splitlines():
 
 def queryUser():
 
-    def getQuestion():
+    def countTotal():
+        ''' Count total of possible questions
 
+        Returns:
+        total amount of possible questions as integer
+        '''
+        total = 0
+
+        for i in range(len(data)):
+            total += len(data[i])
+
+        return total
+
+    target = random.randint(1, countTotal())
+
+    def getQuestion():
         ''' Form a question string out of random 'database' list entry
 
         Returns:
@@ -57,20 +71,13 @@ def queryUser():
         delimitet by new line
         '''
 
-        def countTotal():
-            ''' Count total of possible questions
-
-            Returns:
-            total amount of possible questions as integer
-            '''
-            total = 0
-
-            for i in range(len(data)):
-                total += len(data[i])
-
-            return total
-
         def drawLine(length):
+            ''' Generates a line for decoration
+
+            returns:
+            a line of various length
+            '''
+
             line = ''
             for i in range(int(length*0.75)):
                 line += '-'
@@ -79,11 +86,10 @@ def queryUser():
 
 
         tally = 0
-        target = random.randint(1, countTotal())
         result = ''
 
         for i, di in enumerate(data):
-            for j, dj in enumerate(data):
+            for j, dj in enumerate(data[i]):
                 tally +=1
                 if tally == target:
                     result += '\n{0}\n{1}\n'.format(data[i][j][0],
@@ -91,7 +97,6 @@ def queryUser():
                     for k, dk in enumerate(data[i][j][1]):
                         result += '{0}. {1}\n'.format(k+1, dk)
 
-        # print(target)
         return result
 
     def checkAnswer():
