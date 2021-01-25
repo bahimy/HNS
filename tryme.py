@@ -126,4 +126,5 @@ def queryUser():
     guess = input("Номер ответа: ")
     print(checkAnswer())
 
-queryUser()
+while True:
+    queryUser()
