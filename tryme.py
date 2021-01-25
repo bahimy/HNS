@@ -2,6 +2,7 @@
 
 import re
 import random
+import keys
 
 source = ""         # Holds data source text
 data = list()       # Data source as list
@@ -105,10 +106,24 @@ def queryUser():
         return result
 
     def checkAnswer():
-        return guess
+        ''' Checks user's answer and makes response
+
+        Returns:
+        string with textual description if the users answer war right or wrong
+        '''
+        tally = 0
+        for i, di in enumerate(keys.keys):
+            for j, dj in enumerate(keys.keys[i]):
+                tally += 1
+                if tally == target:
+                    if keys.keys[i][j] == int(guess):
+                        return 'Правильно'
+                    else:
+                        return 'Неправильно. Верный ответ {0}'.\
+                                format(keys.keys[i][j])
 
     print(getQuestion())
-    # guess = input("Номер ответа: ")
-    # print(checkAnswer())
+    guess = input("Номер ответа: ")
+    print(checkAnswer())
 
 queryUser()

@@ -1,4 +1,4 @@
 # HNS
 Health and safety questionnaire
 
-A spin to AK's contribution to labor of laziness league
+A spin of AK's contribution to labor of laziness league
