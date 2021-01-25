@@ -7,6 +7,7 @@ import keys
 source = ""         # Holds data source text
 data = list()       # Data source as list
 blankFlag = False   # Tracks continuous blank lines
+done = {0}          # Tracks already asked questions
 
 with open("qsource") as f:
     source = f.read()
@@ -47,27 +48,46 @@ for l in source.splitlines():
 
             blankFlag = False
 
-def queryUser():
+
+def countTotal():
+    ''' Count total of possible questions
+
+    Returns:
+    total amount of possible questions as integer
+    '''
+    total = 0
+
+    for i in range(len(data)):
+        total += len(data[i])
+
+    return total
+
+def determineQuestionID():
+    ''' Determines per session unique question ID
+
+    Returns:
+    Question ID as integer
+    '''
+
+    target = 0
+
+    if countTotal() == len(done):
+        done.clear()
+        done.add(0)
+
+    while target in done:
+        target = random.randint(1, countTotal())
+
+    done.add(target)
+
+    return target
+
+def queryUser(target):
     ''' Queries the user and reports if the answer is correct
 
     returns:
     index of right answer; -1 otherwise
     '''
-
-    def countTotal():
-        ''' Count total of possible questions
-
-        Returns:
-        total amount of possible questions as integer
-        '''
-        total = 0
-
-        for i in range(len(data)):
-            total += len(data[i])
-
-        return total
-
-    target = random.randint(1, countTotal())
 
     def getQuestion():
         ''' Form a question string out of random 'database' list entry
@@ -127,4 +147,4 @@ def queryUser():
     print(checkAnswer())
 
 while True:
-    queryUser()
+    queryUser(determineQuestionID())
