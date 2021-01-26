@@ -118,7 +118,8 @@ def queryUser(target):
             for j, dj in enumerate(data[i]):
                 tally +=1
                 if tally == target:
-                    result += '\n{0}\n{1}\n'.format(data[i][j][0],
+                    result += '\n{0}/{1} - {2}\n{3}\n'.format(len(done) - 1,
+                            countTotal(), data[i][j][0],
                             drawLine(len(data[i][j][0])))
                     for k, dk in enumerate(data[i][j][1]):
                         result += '{0}. {1}\n'.format(k+1, dk)
