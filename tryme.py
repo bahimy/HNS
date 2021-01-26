@@ -8,6 +8,10 @@ source = ""         # Holds data source text
 data = list()       # Data source as list
 blankFlag = False   # Tracks continuous blank lines
 done = {0}          # Tracks already asked questions
+tough = {0}         # Stores set of problematic questions
+
+with open("tsource") as f:
+    tough = set(f.read().splitlines())
 
 with open("qsource") as f:
     source = f.read()
@@ -140,6 +144,13 @@ def queryUser(target):
                     if keys.keys[i][j] == int(guess):
                         return '\nПравильно'
                     else:
+
+                        # Adding to a tough pool perhaps should be done
+                        # in another part of the code
+                        tough.add(target)
+                        with open('tsource', 'w') as f:
+                            for item in tough:
+                                f.write('%s\n' % item)
                         return '\nНеправильно. Верный ответ {0}'.\
                                 format(keys.keys[i][j])
 
@@ -150,8 +161,6 @@ def queryUser(target):
         Option number of user's choise as integer
         '''
 
-        ValueError
-
         tally = 0
 
         for i, di in enumerate(data):
@@ -161,23 +170,24 @@ def queryUser(target):
                     while True:
                         try:
                             userInput = int(userInput)
-                            if userInput < 1 or userInput > len(data[i][j][1]):
+                            if userInput < 1 or \
+                                    userInput > len(data[i][j][1]):
                                 raise ValueError
                             break
                         except ValueError:
                             if type(userInput) == type(str()):
-                                userInput = input("\nОтвет может содержать только целые числа" \
-                                        "\nНомер ответа: ")
+                                userInput = input("\nОтвет может содержать" \
+                                        "только целые числа\nНомер ответа: ")
                             else:
                                 userInput = input("\nОтвет может содержать " \
                                         "числа от 1 до {0}!\n" \
-                                        "Номер ответа: ".format(len(data[i][j][1])))
+                                        "Номер ответа: ".format(
+                                            len(data[i][j][1])))
 
         return userInput
 
     print(getQuestion())
     guess = getUserInput(input("Номер ответа: "))
-    # guess = input("Номер ответа: ")
     print(checkAnswer())
 
 while True:
