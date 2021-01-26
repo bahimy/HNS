@@ -138,13 +138,46 @@ def queryUser(target):
                 tally += 1
                 if tally == target:
                     if keys.keys[i][j] == int(guess):
-                        return 'Правильно'
+                        return '\nПравильно'
                     else:
-                        return 'Неправильно. Верный ответ {0}'.\
+                        return '\nНеправильно. Верный ответ {0}'.\
                                 format(keys.keys[i][j])
 
+    def getUserInput(userInput):
+        ''' Gets and filters user's input
+
+        Returns:
+        Option number of user's choise as integer
+        '''
+
+        ValueError
+
+        tally = 0
+
+        for i, di in enumerate(data):
+            for j, dj in enumerate(data[i]):
+                tally +=1
+                if tally == target:
+                    while True:
+                        try:
+                            userInput = int(userInput)
+                            if userInput < 1 or userInput > len(data[i][j][1]):
+                                raise ValueError
+                            break
+                        except ValueError:
+                            if type(userInput) == type(str()):
+                                userInput = input("\nОтвет может содержать только целые числа" \
+                                        "\nНомер ответа: ")
+                            else:
+                                userInput = input("\nОтвет может содержать " \
+                                        "числа от 1 до {0}!\n" \
+                                        "Номер ответа: ".format(len(data[i][j][1])))
+
+        return userInput
+
     print(getQuestion())
-    guess = input("Номер ответа: ")
+    guess = getUserInput(input("Номер ответа: "))
+    # guess = input("Номер ответа: ")
     print(checkAnswer())
 
 while True:
