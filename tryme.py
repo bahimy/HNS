@@ -16,15 +16,15 @@ with open("tsource") as f:
 with open("qsource") as f:
     source = f.read()
 
-for l in source.splitlines():
+for line in source.splitlines():
 
     # Strings with '№' sign shows the beginning of the new chapter (i)
-    if l.find('№') > -1:
+    if line.find('№') > -1:
         data.append(list())
 
     else:
 
-        if not l:
+        if not line:
             blankFlag = True
 
         else:
@@ -39,7 +39,7 @@ for l in source.splitlines():
 
                 # Appends question
                 data[len(data) - 1][len(data[len(data) - 1]) - 1].append(
-                        re.sub('^\s+\d+\.\s+', '', l).capitalize())
+                        re.sub(r'^\s+\d+\.\s+', '', line).capitalize())
 
                 # Appends options container (k)
                 data[len(data) - 1][len(data[len(data) - 1]) - 1].append(
@@ -48,7 +48,7 @@ for l in source.splitlines():
             else:
                 # Appends options
                 data[len(data) - 1][len(data[len(data) - 1]) - 1][1].append(
-                        re.sub('^\s+\d+\.\s+', '', l))
+                        re.sub(r'^\s+\d+\.\s+', '', line))
 
             blankFlag = False
 
@@ -65,6 +65,7 @@ def countTotal():
         total += len(data[i])
 
     return total
+
 
 def determineQuestionID():
     ''' Determines per session unique question ID
@@ -85,6 +86,7 @@ def determineQuestionID():
     done.add(target)
 
     return target
+
 
 def queryUser(target):
     ''' Queries the user and reports if the answer is correct
@@ -114,17 +116,16 @@ def queryUser(target):
 
             return line
 
-
         tally = 0
         result = ''
 
         for i, di in enumerate(data):
             for j, dj in enumerate(data[i]):
-                tally +=1
+                tally += 1
                 if tally == target:
-                    result += '\n{0}/{1} - {2}\n{3}\n'.format(len(done) - 1,
-                            countTotal(), data[i][j][0],
-                            drawLine(len(data[i][j][0])))
+                    result += '\n{0}/{1} - {2}\n{3}\n'.\
+                            format(len(done) - 1, countTotal(), data[i][j][0],
+                                   drawLine(len(data[i][j][0])))
                     for k, dk in enumerate(data[i][j][1]):
                         result += '{0}. {1}\n'.format(k+1, dk)
 
@@ -152,7 +153,7 @@ def queryUser(target):
                             for item in tough:
                                 f.write('%s\n' % item)
                         return '\nНеправильно. Верный ответ {0}'.\
-                                format(keys.keys[i][j])
+                            format(keys.keys[i][j])
 
     def getUserInput(userInput):
         ''' Gets and filters user's input
@@ -165,7 +166,7 @@ def queryUser(target):
 
         for i, di in enumerate(data):
             for j, dj in enumerate(data[i]):
-                tally +=1
+                tally += 1
                 if tally == target:
                     while True:
                         try:
@@ -175,13 +176,15 @@ def queryUser(target):
                                 raise ValueError
                             break
                         except ValueError:
-                            if type(userInput) == type(str()):
-                                userInput = input("\nОтвет может содержать" \
-                                        "только целые числа\nНомер ответа: ")
+                            # if type(userInput) == type(str()):
+                            if isinstance(userInput, str):
+                                userInput = input(
+                                        "\nОтвет может содержать только целые"
+                                        "числа\nНомер ответа: ")
                             else:
-                                userInput = input("\nОтвет может содержать " \
-                                        "числа от 1 до {0}!\n" \
-                                        "Номер ответа: ".format(
+                                userInput = input(
+                                        "\nОтвет может содержать числа от 1 до"
+                                        "{0}!\n Номер ответа: ".format(
                                             len(data[i][j][1])))
 
         return userInput
@@ -189,6 +192,7 @@ def queryUser(target):
     print(getQuestion())
     guess = getUserInput(input("Номер ответа: "))
     print(checkAnswer())
+
 
 while True:
     queryUser(determineQuestionID())
