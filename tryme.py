@@ -5,7 +5,7 @@ import random
 import keys
 
 source = ""         # Holds data source text
-data = list()       # Data source as list
+data = list()       # Data source as a list
 blankFlag = False   # Tracks continuous blank lines
 done = {0}          # Tracks already asked questions
 tough = {0}         # Stores set of problematic questions
@@ -93,9 +93,6 @@ def queryUser(target):
 
     Keyword arguments:
     target -- sets the question id that the user will be queried with
-
-    returns:
-    index of right answer; -1 otherwise
     '''
 
     def getQuestion():
@@ -138,7 +135,7 @@ def queryUser(target):
         ''' Checks user's answer and makes response
 
         Returns:
-        string with textual description if the users answer war right or wrong
+        string with textual description was the users answer right or wrong
         '''
         tally = 0
         for i, di in enumerate(keys.keys):
@@ -159,7 +156,10 @@ def queryUser(target):
                             format(keys.keys[i][j])
 
     def getUserInput(userInput):
-        ''' Gets and filters user's input
+        ''' Checks whether the input has a legitimate value
+
+        Exceptions raised:
+        ValueError in case of abnormal value input
 
         Returns:
         Option number of user's choise as integer
