@@ -38,17 +38,17 @@ for line in source.splitlines():
                 data[len(data) - 1].append(list())
 
                 # Appends question
-                data[len(data) - 1][len(data[len(data) - 1]) - 1].append(
-                        re.sub(r'^\s+\d+\.\s+', '', line).capitalize())
+                data[len(data) - 1][len(data[len(data) - 1]) - 1].\
+                    append(re.sub(r'^\s+\d+\.\s+', '', line).capitalize())
 
                 # Appends options container (k)
-                data[len(data) - 1][len(data[len(data) - 1]) - 1].append(
-                        list())
+                data[len(data) - 1][len(data[len(data) - 1]) - 1].\
+                    append(list())
 
             else:
                 # Appends options
-                data[len(data) - 1][len(data[len(data) - 1]) - 1][1].append(
-                        re.sub(r'^\s+\d+\.\s+', '', line))
+                data[len(data) - 1][len(data[len(data) - 1]) - 1][1].\
+                    append(re.sub(r'^\s+\d+\.\s+', '', line))
 
             blankFlag = False
 
@@ -124,8 +124,8 @@ def queryUser(target):
                 tally += 1
                 if tally == target:
                     result += '\n{0}/{1} - {2}\n{3}\n'.\
-                            format(len(done) - 1, countTotal(), data[i][j][0],
-                                   drawLine(len(data[i][j][0])))
+                        format(len(done) - 1, countTotal(), data[i][j][0],
+                               drawLine(len(data[i][j][0])))
                     for k, dk in enumerate(data[i][j][1]):
                         result += '{0}. {1}\n'.format(k+1, dk)
 
@@ -176,16 +176,15 @@ def queryUser(target):
                                 raise ValueError
                             break
                         except ValueError:
-                            # if type(userInput) == type(str()):
                             if isinstance(userInput, str):
-                                userInput = input(
-                                        "\nОтвет может содержать только целые"
-                                        "числа\nНомер ответа: ")
+                                userInput = \
+                                    input("\nОтвет может содержать только"
+                                          "целые числа\nНомер ответа: ")
                             else:
-                                userInput = input(
-                                        "\nОтвет может содержать числа от 1 до"
-                                        "{0}!\n Номер ответа: ".format(
-                                            len(data[i][j][1])))
+                                userInput = \
+                                    input("\nОтвет может содержать числа"
+                                          "от 1 до {0}!\n Номер ответа: ".
+                                          format(len(data[i][j][1])))
 
         return userInput
 
