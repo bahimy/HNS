@@ -91,6 +91,9 @@ def determineQuestionID():
 def queryUser(target):
     ''' Queries the user and reports if the answer is correct
 
+    Keyword arguments:
+    target -- sets the question id that the user will be queried with
+
     returns:
     index of right answer; -1 otherwise
     '''
